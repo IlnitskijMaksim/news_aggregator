@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import config
 from config import STUDENT_ID, SOURCES
 import  feedparser
@@ -17,6 +18,7 @@ app.add_middleware(
 # Пам'ять для збереження джерел (для кожного STUDENT_ID окремо)
 store = {STUDENT_ID: SOURCES.copy()}
 news_store = {STUDENT_ID: []}
+analyzer = SentimentIntensityAnalyzer()
 
 @app.get("/sources/{student_id}")
 def get_sources(student_id: str):
@@ -57,6 +59,27 @@ def get_news(student_id: str):
     if student_id not in news_store:
         raise HTTPException(status_code=404, detail="Student not found")
     return {"articles": news_store[student_id]}
+
+@app.post("/analyze/{student_id}")
+def analyze_tone(student_id: str):
+    if student_id != STUDENT_ID:
+        raise HTTPException(status_code=404, detail="Student not found")
+    articles = news_store.get(student_id, [])
+    result = []
+    for art in articles:
+        text = art.get("title", "")
+        scores = analyzer.polarity_scores(text)
+        comp = scores["compound"]
+        if comp >= 0.05:
+            label = "positive"
+        elif comp <= -0.05:
+            label = "negative"
+        else:
+            label = "neutral"
+        # Додаємо поля "sentiment" і "scores" в копію статті
+        result.append({**art, "sentiment": label, "scores": scores})
+    return {"analyzed": len(result), "articles": result}
+
 
 
 
