@@ -7,7 +7,7 @@ def generate_config():
         content = f'''STUDENT_ID = "{student_id}"
 SOURCES    = []
 '''
-    with open('../config.py', 'w', encoding='utf-8') as cfg:
+    with open('../backend/config.py', 'w', encoding='utf-8') as cfg:
         cfg.write(content)
 
 if __name__ == '__main__':

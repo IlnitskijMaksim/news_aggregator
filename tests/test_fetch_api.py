@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from backend.app import app, news_store
-from config import STUDENT_ID
+from backend.config import STUDENT_ID
 import feedparser
 
 client = TestClient(app)

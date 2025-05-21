@@ -5,12 +5,15 @@ import config
 from config import STUDENT_ID, SOURCES
 import  feedparser
 
-app = FastAPI()
-
 # Додамо CORS (поки що для localhost)
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["<http://localhost:8001>"],  # фронтенд на 8001
+    allow_origins=[
+        "http://localhost:8001",
+        "http://127.0.0.1:8001",
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -79,8 +82,3 @@ def analyze_tone(student_id: str):
         # Додаємо поля "sentiment" і "scores" в копію статті
         result.append({**art, "sentiment": label, "scores": scores})
     return {"analyzed": len(result), "articles": result}
-
-
-
-
-
