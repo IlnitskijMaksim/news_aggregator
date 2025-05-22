@@ -9,10 +9,12 @@ const canvasCtx    = document.getElementById("sentiment-chart").getContext("2d")
 async function loadData() {
   try {
     // 1.1) Підтягуємо новини
-    await fetch(`${API_BASE}/fetch/${STUDENT_ID}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
-    });
+  await fetch(`${API_BASE}/fetch/${STUDENT_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: "{}"
+  });
+
 
     // 1.2) Аналіз тональності
     const res = await fetch(`${API_BASE}/analyze/${STUDENT_ID}`, {

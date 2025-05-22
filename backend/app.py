@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import config
@@ -9,14 +11,11 @@ import  feedparser
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8001",
-        "http://127.0.0.1:8001",
-    ],
-    allow_credentials=True,
+    allow_origins=["http://localhost:8001"],  # фронтенд на 8001
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Пам'ять для збереження джерел (для кожного STUDENT_ID окремо)
 store = {STUDENT_ID: SOURCES.copy()}
@@ -40,7 +39,7 @@ def add_source(student_id: str, payload: dict):
     return {"sources": store[student_id]}
 
 @app.post("/fetch/{student_id}")
-def fetch_news(student_id: str):
+def fetch_news(student_id: str, payload: Optional[dict] = Body(default=None)):
     if student_id != STUDENT_ID:
         raise HTTPException(status_code=404, detail="Student not found")
     # Очищаємо попередній кеш
