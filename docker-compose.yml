@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     volumes:
-      - ./config.py:/app/config.py:ro
+      - ./backend/config.py:/app/config.py:ro
       - ./requirements.txt:/app/requirements.txt:ro
     ports:
       - "8000:8000"

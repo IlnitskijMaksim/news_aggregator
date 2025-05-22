@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # ---------- 4. Копіюємо код бекенду і конфігурацію ----------
 COPY backend/   ./
-COPY config.py  ./
+# COPY config.py  ./
 
 # ---------- 5. Відкриваємо порт для FastAPI ----------
 EXPOSE 8000
