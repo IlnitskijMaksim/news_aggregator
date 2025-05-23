@@ -32,6 +32,15 @@ fake_users_db = {
 store = {STUDENT_ID: SOURCES.copy()}
 news_store = {STUDENT_ID: []}
 analyzer = SentimentIntensityAnalyzer()
+sources_store = {}
+
+@app.on_event("startup")
+async def load_initial_sources() -> None:
+    student_id = getattr(config, "STUDENT_ID", None)
+    sources    = getattr(config, "SOURCES", [])
+    if student_id and isinstance(sources, list):
+        sources_store[student_id] = list(sources)
+        print(f"[startup] loaded {len(sources)} feeds for {student_id}")
 
 @app.get("/sources/{student_id}")
 def get_sources(student_id: str):

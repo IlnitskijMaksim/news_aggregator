@@ -4,9 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Дашборд новин</title>
-  <!-- Підключаємо стилі -->
   <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js з CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -18,13 +16,9 @@
     <option value="neutral">Нейтральні</option>
     <option value="negative">Негативні</option>
   </select>
-
-  <!-- Контейнер для діаграми -->
   <div class="chart-container">
     <canvas id="sentiment-chart"></canvas>
   </div>
-
-  <!-- Таблиця для статей -->
   <table id="articles-table">
     <thead>
       <tr>
@@ -35,13 +29,10 @@
     </thead>
     <tbody></tbody>
   </table>
-
   <script>
     const STUDENT_ID = "Ilnytskyi_d6c04a45";
     const API_BASE    = "http://localhost:8000";
   </script>
-
-  <!-- Підключаємо JS-логіку -->
   <script src="main.js"></script>
 </body>
 </html>
