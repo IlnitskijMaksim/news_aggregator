@@ -28,7 +28,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-asyncio httpx feedparser
       - name: Run backend tests
-        run: pytest tests -q
+        run: |
+          export PYTHONPATH=$PYTHONPATH:./backend
+          pytest tests -q
+
 
   frontend-tests:
     runs-on: ubuntu-latest
