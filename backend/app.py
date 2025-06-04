@@ -6,6 +6,9 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import config
 from config import STUDENT_ID, SOURCES
 import  feedparser
+from collections import Counter
+from typing import List
+
 
 # Додамо CORS (поки що для localhost)
 app = FastAPI()
@@ -86,18 +89,50 @@ def get_news(student_id: str):
 def analyze_tone(student_id: str):
     if student_id != STUDENT_ID:
         raise HTTPException(status_code=404, detail="Student not found")
+
     articles = news_store.get(student_id, [])
     result = []
+    all_words = []
+
+    # Анализируем каждую статью
     for art in articles:
         text = art.get("title", "")
         scores = analyzer.polarity_scores(text)
         comp = scores["compound"]
+
+        # Определение тональности
         if comp >= 0.05:
             label = "positive"
         elif comp <= -0.05:
             label = "negative"
         else:
             label = "neutral"
-        # Додаємо поля "sentiment" і "scores" в копію статті
-        result.append({**art, "sentiment": label, "scores": scores})
-    return {"analyzed": len(result), "articles": result}
+
+        # Собираем все слова для тегов
+        clean_words = [word.lower() for word in text.split() if len(word) > 3]
+        all_words.extend(clean_words)
+
+        # Добавляем результаты анализа
+        result.append({
+            **art,
+            "sentiment": label,
+            "scores": scores,
+            "tags": clean_words  # Прямое добавление тегов в статью
+        })
+
+    # Подсчет популярных тегов
+    common_tags = Counter(all_words).most_common(10)
+    tags_list = [{"tag": tag[0], "count": tag[1]} for tag in common_tags]
+
+    # Возвращаем результат
+    return {
+        "analyzed": len(result),
+        "articles": result,
+        "tags": tags_list
+    }
+
+
+
+
+
+
