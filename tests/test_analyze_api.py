@@ -9,7 +9,7 @@ def test_analyze_empty():
     news_store[STUDENT_ID] = []
     res = client.post(f"/analyze/{STUDENT_ID}")
     assert res.status_code == 200
-    assert res.json() == {"analyzed": 0, "articles": []}
+    assert res.json() == {"analyzed": 0, "articles": [], "tags": []}
 
 def test_analyze_real(monkeypatch):
     news_store[STUDENT_ID] = [
