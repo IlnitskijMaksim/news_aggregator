@@ -7,10 +7,7 @@ import config
 from config import STUDENT_ID, SOURCES
 import  feedparser
 from collections import Counter
-from typing import List
 
-
-# Додамо CORS (поки що для localhost)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -24,14 +21,11 @@ fake_users_db = {
     STUDENT_ID: {
         "username": STUDENT_ID,
         "full_name": STUDENT_ID,
-        "hashed_password": "password123",  # нерекомендовано зберігати так на проді
+        "hashed_password": "password123",
         "disabled": False,
     }
 }
 
-
-
-# Пам'ять для збереження джерел (для кожного STUDENT_ID окремо)
 store = {STUDENT_ID: SOURCES.copy()}
 news_store = {STUDENT_ID: []}
 analyzer = SentimentIntensityAnalyzer()
@@ -65,7 +59,6 @@ def add_source(student_id: str, payload: dict):
 def fetch_news(student_id: str, payload: Optional[dict] = Body(default=None)):
     if student_id != STUDENT_ID:
         raise HTTPException(status_code=404, detail="Student not found")
-    # Очищаємо попередній кеш
     news_store[student_id].clear()
     fetched = 0
     for url in config.SOURCES:
@@ -94,13 +87,11 @@ def analyze_tone(student_id: str):
     result = []
     all_words = []
 
-    # Анализируем каждую статью
     for art in articles:
         text = art.get("title", "")
         scores = analyzer.polarity_scores(text)
         comp = scores["compound"]
 
-        # Определение тональности
         if comp >= 0.05:
             label = "positive"
         elif comp <= -0.05:
@@ -108,23 +99,19 @@ def analyze_tone(student_id: str):
         else:
             label = "neutral"
 
-        # Собираем все слова для тегов
         clean_words = [word.lower() for word in text.split() if len(word) > 3]
         all_words.extend(clean_words)
 
-        # Добавляем результаты анализа
         result.append({
             **art,
             "sentiment": label,
             "scores": scores,
-            "tags": clean_words  # Прямое добавление тегов в статью
+            "tags": clean_words
         })
 
-    # Подсчет популярных тегов
     common_tags = Counter(all_words).most_common(10)
     tags_list = [{"tag": tag[0], "count": tag[1]} for tag in common_tags]
 
-    # Возвращаем результат
     return {
         "analyzed": len(result),
         "articles": result,

@@ -5,7 +5,6 @@ from backend.config import STUDENT_ID
 client = TestClient(app)
 
 def test_get_empty_sources():
-    # Обов'язково очистити список перед тестом!
     store[STUDENT_ID] = []
     res = client.get(f"/sources/{STUDENT_ID}")
     assert res.status_code == 200

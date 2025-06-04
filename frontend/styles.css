@@ -16,7 +16,7 @@ body {
   background-color: var(--bg-color-light);
   color: var(--text-color-light);
   line-height: 1.6;
-  transition: background-color 0.5s ease, color 0.5s ease; /* Плавная смена фона */
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 body.dark-mode {
@@ -52,7 +52,6 @@ h1 {
   color: #555;
 }
 
-/* Темна тема */
 body.dark-mode {
   background-color: #121212;
   color: #e0e0e0;
@@ -91,12 +90,12 @@ body.dark-mode .tags-container ul li {
 body.dark-mode select {
   background-color: var(--table-bg-dark);
   color: var(--text-color-dark);
-  border: 1px solid #fff; /* Белая граница */
-  box-shadow: none; /* Убрана тень */
+  border: 1px solid #fff;
+  box-shadow: none;
 }
 
 body.dark-mode .subtitle {
-  color: #b0bec5; /* Світло-блакитний відтінок для кращої видимості */
+  color: #b0bec5;
 }
 
 body.dark-mode select option {
@@ -116,7 +115,7 @@ body.dark-mode a:hover {
 body.dark-mode p,
 body.dark-mode label,
 body.dark-mode .tags-container ul li {
-  color: #e0e0e0; /* Світлий текст для контрасту */
+  color: #e0e0e0;
 }
 
 body.dark-mode h1 {
@@ -124,7 +123,7 @@ body.dark-mode h1 {
 }
 
 body.dark-mode .chartjs-legend li {
-  color: #e0e0e0; /* Той самий колір тексту, що використовується у темній темі */
+  color: #e0e0e0;
 }
 
 body.dark-mode .chart-container canvas {
@@ -138,7 +137,7 @@ body.dark-mode .section-title {
 
 body.dark-mode .tags-container ul li {
   background-color: #333;
-  color: #aad1ff; /* Світло-синій для видимого контрасту */
+  color: #aad1ff;
 }
 
 .theme-toggle {
@@ -160,7 +159,6 @@ body.dark-mode .section-title {
   color: #f57c00;
 }
 
-/* ЗАГОЛОВОК СТОРІНКИ */
 h1 {
   font-size: 2.5em;
   margin-bottom: 10px;
@@ -174,7 +172,6 @@ h1 {
   text-align: center;
 }
 
-/* ОФОРМЛЕННЯ СЕКЦІЙ */
 section {
   margin-bottom: 40px;
 }
@@ -183,10 +180,9 @@ section {
   font-size: 1.6em;
   color: #00796b;
   margin-bottom: 20px;
-  text-align: left; /* Заголовки по лівому краю */
+  text-align: left;
 }
 
-/* ФІЛЬТР */
 .filter-section {
   display: flex;
   justify-content: center;
@@ -207,7 +203,6 @@ select {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* БЛОК ДІАГРАМИ */
 .chart-container {
   margin: 0 auto;
   padding: 20px;
@@ -217,7 +212,6 @@ select {
   border: 1px solid #ddd;
 }
 
-/* ТАБЛИЦЯ */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -271,7 +265,6 @@ body.dark-mode tr:hover {
   background-color: var(--table-border-dark);
 }
 
-/* ТЕГИ */
 .tags-container {
   display: flex;
   flex-wrap: wrap;
@@ -308,7 +301,6 @@ body.dark-mode tr:hover {
   transform: scale(1.1);
 }
 
-/* АДАПТИВНІСТЬ */
 @media (max-width: 768px) {
   .container {
     padding: 10px;
@@ -332,7 +324,6 @@ body.dark-mode tr:hover {
   }
 }
 
-/* Перемикач теми */
 .theme-toggle {
   text-align: right;
   margin-top: -10px;
@@ -382,36 +373,34 @@ body.dark-mode tr:hover {
   transition: transform 0.3s, left 0.3s;
 }
 
-/* Іконки у свічі */
 .theme-switch .icon {
   position: absolute;
-  font-size: 18px; /* Розмір іконок */
+  font-size: 18px;
   top: 50%;
-  transform: translateY(-50%); /* Центрування по вертикалі */
+  transform: translateY(-50%);
   line-height: 1;
 }
 
 .theme-switch .sun-icon {
-  left: 6px; /* Трохи менше відступу для точного центрування */
+  left: 6px;
   color: #ff9800;
   opacity: 1;
   transition: opacity 0.3s;
 }
 
 .theme-switch .moon-icon {
-  right: 6px; /* Зменшення відступу як і для сонця */
+  right: 6px;
   color: #009688;
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-/* Коли активний (темна тема) */
 .theme-switch input:checked + .slider {
   background-color: var(--highlight-color);
 }
 
 .theme-switch input:checked + .slider::before {
-  left: 24px; /* Точна позиція кружка */
+  left: 24px;
 }
 
 .theme-switch input:checked + .slider .sun-icon {
@@ -421,9 +410,6 @@ body.dark-mode tr:hover {
 .theme-switch input:checked + .slider .moon-icon {
   opacity: 1;
 }
-
-
-
 
 :root {
   --bg-color-light: #f0f0e8;

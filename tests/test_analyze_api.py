@@ -24,7 +24,6 @@ def test_analyze_real(monkeypatch):
             else:
                 return {"neg":0.6, "neu":0.4, "pos":0.0, "compound": -0.6}
 
-    # Заміна реального аналізатора на фейковий
     monkeypatch.setattr(vs, "SentimentIntensityAnalyzer", FakeAnalyzer)
 
     res = client.post(f"/analyze/{STUDENT_ID}")

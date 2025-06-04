@@ -8,7 +8,6 @@ def test_config_generated(tmp_path, monkeypatch):
 
     gen_config.generate_config()
 
-    import importlib.util
     config_path = tmp_path.parent / "config.py"
     spec = importlib.util.spec_from_file_location("config", str(config_path))
     cfg = importlib.util.module_from_spec(spec)

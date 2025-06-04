@@ -1,7 +1,7 @@
 let currentTag = null;
-// Дождёмся загрузки DOM
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Глобальные переменные
+
   const themeSwitcher = document.getElementById("theme-switcher-grid");
   const themeSwitch = document.getElementById("theme-switch");
   const filterSelect = document.getElementById("filter-select");
@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const currentTheme = localStorage.getItem("theme") || "light";
 
-  // Инициализация Chart.js
   chart = new Chart(canvasCtx, {
     type: "pie",
     data: {
@@ -82,11 +81,10 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       const data = await res.json();
 
-      // Убедимся, что у каждой статьи есть массив tags (если его ещё нет)
       allArticles = data.articles.map((a) => ({
         ...a,
         date: a.published ? new Date(a.published) : new Date(),
-        tags: a.tags || [], // убедимся, что tags существует
+        tags: a.tags || [],
       }));
 
       renderTags(data.tags || []);
@@ -104,7 +102,6 @@ function renderTags(tags) {
       )
       .join("");
 
-    // Добавляем обработчики для кликов на тегах
 const tagLinks = document.querySelectorAll(".tag-link");
     tagLinks.forEach((link) => {
       link.addEventListener("click", (event) => {
@@ -112,11 +109,9 @@ const tagLinks = document.querySelectorAll(".tag-link");
         const tag = event.target.getAttribute("data-tag");
 
         if (currentTag === tag) {
-          // Если нажимаем на тот же тег, сбрасываем фильтр
           currentTag = null;
-          render(); // Показываем все статьи
+          render();
         } else {
-          // Иначе фильтруем статьи по тегу
           currentTag = tag;
           render({ tagFilter: tag });
         }
@@ -170,7 +165,6 @@ const tagLinks = document.querySelectorAll(".tag-link");
 function render(queryFilter = {}) {
     const { sentimentFilter = "all", tagFilter = null } = queryFilter;
 
-    // Фильтруем статьи по выбранным параметрам
     const filtered = allArticles.filter((article) => {
       const matchesSentiment =
         sentimentFilter === "all" || article.sentiment === sentimentFilter;
@@ -179,7 +173,6 @@ function render(queryFilter = {}) {
       return matchesSentiment && matchesTag;
     });
 
-    // Обновляем таблицу статей
     tableBody.innerHTML = filtered
       .sort((a, b) => b.date - a.date)
       .map(
@@ -192,7 +185,6 @@ function render(queryFilter = {}) {
       )
       .join("");
 
-    // Обновляем диаграмму
     updateChart(filtered);
   }
 
